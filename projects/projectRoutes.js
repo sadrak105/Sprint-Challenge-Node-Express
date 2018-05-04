@@ -38,6 +38,7 @@ router.get('/', (req, res) => {
     })
 })
 
+//===================GET BY ID==========================
 router.get('/:id', (req,res) => {
 
     db
@@ -106,6 +107,9 @@ router.delete('/:id', (req, res) => {
         .catch(err => {
             res.status(500).json({ error:"Delete Error!" })
         })
+    })
+    .catch(err => {
+        res.status(500).json({ error:"Could Not Delete Porject!"})
     })
 })
 
