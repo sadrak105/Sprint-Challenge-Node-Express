@@ -50,6 +50,18 @@ router.get('/:id', (req,res) => {
     })
 });
 
+//=============GET ACTIONS FROM PROJECTS============
+router.get('/get-actions/:id', (req,res) => {
+    db
+    .getProjectActions(req.params.id)
+    .then(projects => {
+        res.status(200).json(projects);
+    })
+    .catch(err => {
+        res.status(500).json({ error:"Error Getting Actions!" })
+    })
+})
+
 //==================PUT====================
 router.put('/:id', (req, res) => {
     const { name, description } = req.body;
