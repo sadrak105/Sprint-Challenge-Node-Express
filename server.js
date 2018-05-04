@@ -9,3 +9,5 @@ server.use(cors());
 server.use(helmet());
 
 
+const port = 5000;
+server.listen(port, () => console.log(`\n== API Running On ${port} ==\n`));
