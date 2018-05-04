@@ -4,6 +4,28 @@ const db = require('../data/helpers/projectModel');
 
 const router = express.Router();
 
+//=================Post=================
+router.post('/', (req, res) => {
+    const { name, description, completed } = req.body;
+    const project = req.body;
+    if (!project.name || !project.description){
+        res.status(400).json({ error:"Needed fields!"})
+    } 
+    if (project.description.length > 128 || project.name.length > 128){
+        res.status(400).json({ error:"Needs to be less than 128 characters!"})
+    }
+    else {
+    db
+    .insert(project)
+    .then(projects => {
+        res.status(201).json(projects);
+    })
+    .catch(err => {
+        res.status(500).json({ error:"error" })
+    })
+}
+})
+
 //===================GET================
 router.get('/', (req, res) => {
     db
