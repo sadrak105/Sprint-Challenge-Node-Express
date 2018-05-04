@@ -48,6 +48,33 @@ router.get('/:id', (req, res) => {
     })
 })
 
+//========================PUT=========================
+router.put('/:id', (req, res) => {
+    const { project_id, description, notes } = req.body;
+    const action = req.body;
+
+    db
+    .update(req.params.id, action)
+    .then(resource => {
+        if(resource === null){
+            res.status(400).json({ error:"Action NOT Found!"})
+        }
+        else {
+            db
+            .get(req.params.id)
+            .then(action => {
+                res.status(200).json(action)
+            })
+            .catch(err => {
+                res.status(500).json({ error:"Error Updating Action!" })
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).json({ error:"Error Updating!" })
+    })
+})
+
 
 
 module.exports = router;
