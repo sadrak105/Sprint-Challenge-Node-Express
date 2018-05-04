@@ -6,7 +6,7 @@ const router = express.Router();
 
 //=================Post=================
 router.post('/', (req, res) => {
-    const { name, description, completed } = req.body;
+    const { name, description } = req.body;
     const project = req.body;
     if (!project.name || !project.description){
         res.status(400).json({ error:"Needed fields!"})
@@ -51,7 +51,33 @@ router.get('/:id', (req,res) => {
 });
 
 //==================PUT====================
+router.put('/:id', (req, res) => {
+    const { name, description } = req.body;
+    const project = req.body;
 
+    db
+    .update(req.params.id, project)
+    .then(resource => {
+        if (resource === null) {
+            res.status(400).json({ error:"No project found!" })
+        }
+        else {
+            db
+            .get(req.params.id)
+            .then(project => {
+                res.status(200).json(project)
+            })
+            .catch(err => {
+                res.status(500).json({ error:"Error Updating!"})
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).json({ error:"Could Not Update!"})
+    })
+})
+
+//===================DELETE=======================
 
 
 module.exports = router;
